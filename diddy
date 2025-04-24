@@ -1,0 +1,86 @@
+// MainActivity.java - Entry point of the DihBlox game app
+
+package com.dihblox.game;
+
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    private int dihCoins = 0; // Default Dih-Coins for the user
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main); // Set the layout
+
+        TextView welcomeText = findViewById(R.id.welcome_text); // Text for welcoming player
+        welcomeText.setText("Welcome to DihBlox!"); // Setting the welcome message
+
+        // Start with a small amount of Dih-Coins
+        updateDihCoins(dihCoins);
+
+        // For testing purposes, simulating purchase
+        buyItem(500); // Example to "buy" an item worth 500 Dih-Coins
+    }
+
+    // Method to update the number of Dih-Coins the user has
+    private void updateDihCoins(int coins) {
+        TextView dihCoinsText = findViewById(R.id.dih_coins_text);
+        dihCoinsText.setText("Dih-Coins: " + coins);
+    }
+
+    // Simulating item purchase
+    private void buyItem(int cost) {
+        if (dihCoins >= cost) {
+            dihCoins -= cost;
+            updateDihCoins(dihCoins);
+            Toast.makeText(this, "Item purchased successfully!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Not enough Dih-Coins to make this purchase.", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+
+// AdminPanel.java - Admin functionalities for controlling game items
+
+package com.dihblox.game;
+
+import android.os.Bundle;
+import android.widget.Toast;
+
+public class AdminPanel extends MainActivity {
+
+    // Admin-only functionality
+    private void setDihCoinsForUser(int newCoinValue) {
+        dihCoins = newCoinValue;
+        updateDihCoins(dihCoins);
+        Toast.makeText(this, "Admin changed Dih-Coins to " + dihCoins, Toast.LENGTH_SHORT).show();
+    }
+
+    // Optionally add more admin functions here, such as managing items or users
+}
+
+// AvatarCreator.java - Handle user-generated avatars
+
+package com.dihblox.game;
+
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import android.widget.ImageView;
+
+public class AvatarCreator extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_avatar_creator);
+
+        // Create or load the user avatar here
+        ImageView avatarImage = findViewById(R.id.avatar_image);
+        // Example of setting an avatar (in reality, this would be generated via AI)
+        avatarImage.setImageResource(R.drawable.sample_avatar);
+    }
+}
